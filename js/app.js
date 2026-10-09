@@ -85,7 +85,19 @@
     ${flor(24, 104, 22, "#fbdde0", "#f4bcc4", "#eb9aa7")}${flor(84, 84, 16, "#f8d0b8", "#f2b08f", "#e89470")}
     ${flor(130, 72, 13, "#f2a9b5", "#fbdde0", "#e98a9b")}${flor(12, 62, 12, "#f8d0b8", "#fbdde0", "#f2b08f")}
   </svg>`;
-  document.querySelectorAll(".flor").forEach((e, i) => { e.innerHTML = RAMO; e.querySelector("svg").style.animationDelay = -(i * 1.3) + "s"; });
+  const FL = C.flores || {};
+  document.querySelectorAll(".flor").forEach((e, i) => {
+    if (FL.imagen) {
+      e.innerHTML = `<img src="${esc(FL.imagen)}" alt="" aria-hidden="true">`;
+      if (FL.tamano) {
+        const k = e.closest(".portada") ? 1.35 : 1;
+        e.style.width = e.style.height = FL.tamano * k + "px";
+      }
+    } else {
+      e.innerHTML = RAMO;
+    }
+    e.firstElementChild.style.animationDelay = -(i * 1.3) + "s";
+  });
 
   /* ---------- Adornos entre secciones ---------- */
   document.querySelectorAll(".sec").forEach((s, i, all) => {
@@ -125,7 +137,7 @@
   addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(par); } }, { passive: true });
   par();
 
-  /* ---------- Mariposas ---------- */
+  /* ---------- Mariposas ---------- 
   const COLORES = [["#f2a9b6", "#e07f93"], ["#c9b2e0", "#a98bcc"], ["#f6c9b0", "#eaa07c"]];
   const MARIPOSA = (c) => `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 20C14 6 3 4 3 14c0 7 8 9 17 6z" fill="${c[0]}"/><path d="M20 20C26 6 37 4 37 14c0 7-8 9-17 6z" fill="${c[0]}"/>
@@ -140,7 +152,39 @@
     b.style.animationDelay = -(i * 1.7) + "s";
     b.innerHTML = MARIPOSA(COLORES[i % COLORES.length]);
     sec.appendChild(b);
+  });*/
+  
+/* ---------- Mariposas (Soporte PNG externo o SVG) ---------- */
+  const M = C.mariposas || {};
+  const COLORES = [["#f2a9b6", "#e07f93"], ["#c9b2e0", "#a98bcc"], ["#f6c9b0", "#eaa07c"]];
+  const MARIPOSA_SVG = (c) => `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 20C14 6 3 4 3 14c0 7 8 9 17 6z" fill="${c[0]}"/><path d="M20 20C26 6 37 4 37 14c0 7-8 9-17 6z" fill="${c[0]}"/>
+    <path d="M20 21C12 22 6 28 9 33c4 3 10-3 11-12z" fill="${c[1]}"/><path d="M20 21c8 1 14 7 11 12-4 3-10-3-11-12z" fill="${c[1]}"/>
+    <rect x="19" y="12" width="2" height="18" rx="1" fill="#6b4a3a"/></svg>`;
+
+  const posiciones = [["12%", "30%"], ["78%", "18%"], ["70%", "62%"], ["20%", "75%"]];
+
+  document.querySelectorAll(".sec").forEach((sec, i) => {
+    const [l, t] = posiciones[i % posiciones.length];
+    const b = document.createElement("div");
+    b.className = "mariposa";
+    b.style.left = l; 
+    b.style.top = t;
+    b.style.animationDelay = -(i * 1.7) + "s";
+
+    // Si especificaste imágenes en config.js, las usa; de lo contrario usa el SVG por defecto
+    const imgRuta = (i % 2 === 0 ? M.imagen1 : M.imagen2) || M.imagen;
+    if (imgRuta) {
+      b.innerHTML = `<img src="${esc(imgRuta)}" alt="" aria-hidden="true">`;
+      if (M.tamano) b.style.width = b.style.height = M.tamano + "px";
+    } else {
+      b.innerHTML = MARIPOSA_SVG(COLORES[i % COLORES.length]);
+    }
+
+    sec.appendChild(b);
   });
+
+
 
   /* ---------- Revelado al hacer scroll ---------- */
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("vista"); io.unobserve(e.target); } }), { threshold: 0.12 });

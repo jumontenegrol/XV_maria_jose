@@ -201,3 +201,18 @@ body{background:radial-gradient(ellipse at 20% 0%,#f0cbc4 0,transparent 55%),rad
 .bolsillo{background:linear-gradient(200deg,#f0d9ce,#dfb9ad)}
 .solapa{background:linear-gradient(180deg,#e7c8bd,#d3a99c);filter:drop-shadow(0 6px 4px rgba(90,40,30,.25))}
 #sello{width:62px;height:62px;background:radial-gradient(circle at 35% 28%,#c9444f,#8d1f2c 70%);border:0;box-shadow:0 6px 12px rgba(80,20,25,.5),inset 0 0 0 4px rgba(255,255,255,.12),inset 0 0 0 5px rgba(0,0,0,.18);color:#f7d9a6;text-shadow:0 1px 2px rgba(0,0,0,.4);letter-spacing:.05em}
+
+/* flores y mariposa con imagen propia */
+.flor>img{width:100%;height:100%;object-fit:contain;object-position:top left;filter:drop-shadow(0 6px 8px rgba(150,70,80,.22));transform-origin:0 0;animation:mecer 7s ease-in-out infinite alternate}
+
+/* MARIPOSA CON IMAGEN REAL Y VUELO REALISTA */
+.mariposa {
+  position: absolute; width: 55px; height: 55px; pointer-events: none; z-index: 10;
+}
+.mariposa img {
+  width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+  animation: vueloRealista 7s ease-in-out infinite alternate;
+}
+.mariposa.tl { top: 18%; left: 8%; }
+.mariposa.tr { top: 22%; right: 8%; }

@@ -66,6 +66,21 @@ const INVITACION = {
     mensaje: "¡Hola! Soy {nombre} y confirmo mi asistencia a los XV años de {quinceanera}."
   },
 
+  // Flores de las esquinas:
+  // - imagen: ruta de tu PNG/WebP con fondo transparente (flores en la esquina SUPERIOR IZQUIERDA;
+  //   el código la voltea solo para las otras esquinas). Déjalo vacío "" para usar las flores dibujadas.
+  // - tamano: ancho en píxeles de cada adorno (la portada lo usa 35% más grande).
+  flores: {
+    imagen: "assets/img/flores1.png",   // ej: "assets/img/flores.png"
+    tamano: 170
+  },
+
+  mariposas: {
+    imagen1: "assets/img/mariposa3.png",
+    imagen2: "assets/img/mariposa2.png", // o la misma si solo tienes una
+    tamano: 55
+  },
+
   despedida: "¡Te esperamos!",
 
   // Fotos: reemplaza los archivos de assets/img/ por los reales
