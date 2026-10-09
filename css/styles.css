@@ -211,8 +211,70 @@ body{background:radial-gradient(ellipse at 20% 0%,#f0cbc4 0,transparent 55%),rad
 }
 .mariposa img {
   width: 100%; height: 100%; object-fit: contain;
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
-  animation: vueloRealista 7s ease-in-out infinite alternate;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25))
 }
 .mariposa.tl { top: 18%; left: 8%; }
 .mariposa.tr { top: 22%; right: 8%; }
+
+/* ---------- MARIPOSA ESTILO FLOR ---------- */
+.mariposa {
+  position: absolute;
+  width: 80px;            /* Tamaño base (ajústalo según tu imagen) */
+  height: 80px;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transform-origin: top left;
+  transition: opacity 1.2s, scale 1.6s cubic-bezier(.2, .7, .2, 1);
+  scale: .7;
+}
+
+/* Revelado al hacer scroll (igual a .flor) */
+.sec.vista .mariposa {
+  opacity: 1;
+  scale: 1;
+}
+
+/* Imagen con mecido y sombra (igual que .flor > img) */
+.mariposa > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top left;
+  filter: drop-shadow(0 6px 8px rgba(150, 70, 80, .22));
+  transform-origin: 0 0;
+}
+
+/* POSICIONAMIENTO Y ORIENTACIÓN */
+/* Izquierda (original) */
+.mariposa.izq, .mariposa.tl {
+  top: -14px;
+  left: -24px;
+}
+
+/* Derecha (espejo horizontal) */
+.mariposa.der, .mariposa.tr {
+  top: -14px;
+  right: -24px;
+  transform: scaleX(-1);
+}
+
+/* Inferior Izquierda (espejo vertical) */
+.mariposa.bl {
+  bottom: -14px;
+  left: -24px;
+  transform: scaleY(-1);
+}
+
+/* Inferior Derecha (espejo en ambos ejes) */
+.mariposa.br {
+  bottom: -14px;
+  right: -24px;
+  transform: scale(-1, -1);
+}
+
+/* Tamaño especial si está en la portada */
+.portada .mariposa {
+  width: 160px;
+  height: 160px;
+}
