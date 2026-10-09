@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XV Años · Invitación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bloqueado">
+
+<!-- SOBRE -->
+<div id="sobre">
+  <div class="sobre-caja" id="sobreCaja">
+    <div class="carta"><span class="carta-t">Mis XV Años</span><strong data-nombre></strong></div>
+    <div class="bolsillo"></div>
+    <div class="solapa"></div>
+    <button id="sello" aria-label="Abrir invitación">XV</button>
+  </div>
+  <p class="sobre-hint">Toca el sello para abrir tu invitación</p>
+</div>
+
+<main id="pagina">
+  <div class="hoja">
+
+    <section class="sec portada">
+      <div class="flor tl"></div><div class="flor tr"></div>
+      <h1 class="script">Mis XV Años</h1>
+      <p class="nombre script" data-nombre></p>
+      <div class="arco"><img id="fotoPortada" alt="Foto de la quinceañera"></div>
+      <p class="frase" id="frase"></p>
+    </section>
+
+    <section class="sec">
+      <div class="flor tr"></div>
+      <p class="rotulo">Acompáñame en este día tan especial junto a mis padres</p>
+      <p class="script grande" id="padres"></p>
+      <p class="rotulo">Mis padrinos</p>
+      <p class="script grande" id="padrinos"></p>
+      <p class="rotulo">A festejar mis</p>
+      <p class="xv">XV AÑOS</p>
+    </section>
+
+    <section class="sec fecha-sec">
+      <div class="flor bl"></div><div class="flor br"></div>
+      <div class="fecha-linea"><span id="diaSem"></span><b id="diaNum"></b><span id="anio"></span></div>
+      <p class="script mes" id="mesTxt"></p>
+      <p class="script faltan">Faltan</p>
+      <div class="cuenta">
+        <div><b id="cd-d">0</b><small>Días</small></div><i>:</i>
+        <div><b id="cd-h">0</b><small>Horas</small></div><i>:</i>
+        <div><b id="cd-m">0</b><small>Minutos</small></div><i>:</i>
+        <div><b id="cd-s">0</b><small>Segundos</small></div>
+      </div>
+      <h2 class="script">El gran día</h2>
+      <div id="calendario" class="cal"></div>
+    </section>
+
+    <section class="sec">
+      <div class="flor tl"></div><div class="flor br"></div>
+      <div id="eventos"></div>
+    </section>
+
+    <section class="foto-sec"><img id="fotoRetrato" alt="Retrato de la quinceañera"></section>
+
+    <section class="sec">
+      <div class="flor tl"></div><div class="flor tr"></div>
+      <h2 class="script">Itinerario de actividades</h2>
+      <ul class="linea" id="itinerario"></ul>
+    </section>
+
+    <section class="sec">
+      <div class="flor bl"></div>
+      <h2 class="script">Código de vestimenta</h2>
+      <p class="rotulo" id="vestTitulo"></p>
+      <p class="texto" id="vestTexto"></p>
+      <div class="paleta" id="paleta"></div>
+    </section>
+
+    <section class="sec">
+      <div class="flor tr"></div><div class="flor bl"></div>
+      <h2 class="script">Sugerencia de regalos</h2>
+      <p class="texto" id="regaloTexto"></p>
+      <div class="banco">
+        <span id="regaloBanco"></span>
+        <b id="regaloCuenta"></b>
+        <small id="regaloTitular"></small>
+        <button class="btn" id="copiar" type="button">Copiar número</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="flor tl"></div><div class="flor br"></div>
+      <h2 class="script">Confirmar asistencia</h2>
+      <p class="texto" id="rsvpTexto"></p>
+      <input id="invitado" type="text" placeholder="Tu nombre" autocomplete="name" aria-label="Tu nombre">
+      <button class="btn grande-btn" id="confirmar" type="button">Confirmar por WhatsApp</button>
+      <p class="texto peq">Tu presencia y alegría harán que esta noche sea inolvidable.</p>
+      <p class="script grande" id="despedida"></p>
+      <div class="foto-peq"><img id="fotoGaleria1" alt="Foto"></div>
+    </section>
+
+    <section class="foto-sec final"><img id="fotoGaleria2" alt="Foto final"></section>
+  </div>
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
