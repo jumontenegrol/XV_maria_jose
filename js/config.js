@@ -55,7 +55,7 @@ const INVITACION = {
   },
 
   confirmacion: {
-    whatsapp: "573000000000", // país + número, sin + ni espacios (57 = Colombia)
+    whatsapp: "573204855740", // país + número, sin + ni espacios (57 = Colombia)
     fechaLimite: "15 de noviembre",
     mensaje: "¡Hola! Soy {nombre} y confirmo mi asistencia a los XV años de {quinceanera}."
   },
