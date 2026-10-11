@@ -3,14 +3,49 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
+  /* ---------- Iconos de línea ---------- */
+  const SV = (d) => `<svg viewBox="0 0 40 40" fill="none" stroke="#1f4d36" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+  const ICO = {
+    misa: SV('<path d="M20 3v6M17 6h6M20 9l-9 8v6h18v-6zM8 23h24v14H8zM17 37v-7a3 3 0 016 0v7"/>'),
+    llegada: SV('<path d="M6 29L4 13l9 7 7-11 7 11 9-7-2 16zM6 34h28"/>'),
+    vals: SV('<path d="M20 34C6 25 4 17 4 13a8 8 0 0116-2 8 8 0 0116 2c0 4-2 12-16 21z"/>'),
+    cena: SV('<circle cx="20" cy="20" r="13"/><circle cx="20" cy="20" r="8"/>'),
+    foto: SV('<path d="M5 12h7l2-4h12l2 4h7v21H5z"/><circle cx="20" cy="22" r="6"/>'),
+    fiesta: SV('<circle cx="20" cy="17" r="12"/><path d="M8 17h24M20 5v24M11 10c6 4 12 4 18 0M11 24c6-4 12-4 18 0M20 29v6M14 36h12"/>'),
+    brindis: SV('<path d="M9 5h9l-1.5 12a3 3 0 01-6 0zM22 5h9l-1.5 12a3 3 0 01-6 0zM13.5 20v14M9 34h9M26.5 20v14M22 34h9"/>'),
+    despedida: SV('<circle cx="20" cy="20" r="15"/><path d="M20 11v9l6 4"/>')
+  };
+  ICO.corazon = ICO.vals;
+
   /* ---------- Textos ---------- */
   document.title = "XV Años de " + C.nombre;
   document.querySelectorAll("[data-nombre]").forEach((e) => (e.textContent = C.nombre));
   $("frase").textContent = C.frase;
   $("padres").innerHTML = C.padres.map(esc).join(" &amp;<br>");
-  $("padrinos").innerHTML = C.padrinos.map(esc).join(" &amp;<br>");
   $("vestTitulo").textContent = C.vestimenta.titulo;
+  $("vestDetalle").textContent = C.vestimenta.detalle || "";
   $("vestTexto").textContent = C.vestimenta.texto;
+  $("regaloTitulo").textContent = C.regalo.titulo || "Sugerencia de regalos";
+  if (!C.regalo.cuenta) $("bancoCaja").style.display = "none";
+  const arco = $("arcoSuperior");
+  arco.onload = () => { // recorta solo el espacio transparente de arriba para que el arco quede pegado al borde
+    let pct = 0;
+    try {
+      const w = arco.naturalWidth, h = arco.naturalHeight, sw = Math.min(w, 400), sh = Math.round(h * sw / w);
+      const cv = document.createElement("canvas"); cv.width = sw; cv.height = sh;
+      const cx = cv.getContext("2d"); cx.drawImage(arco, 0, 0, sw, sh);
+      const px = cx.getImageData(0, 0, sw, sh).data;
+      let top = 0;
+      fin: for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) if (px[(y * sw + x) * 4 + 3] > 20) { top = y; break fin; }
+      pct = (top / sh) * (h / w) * 100;
+    } catch (e) { /* abierto como archivo local: sin recorte automático, usa arcoSubir */ }
+    arco.style.marginTop = `calc(${-pct}% + ${C.arcoSubir || 0}px)`;
+  };
+  arco.src = C.arcoSuperior || "";
+  const corona = $("corona");
+  if (C.corona === false) corona.remove();
+  else if (C.corona) corona.innerHTML = `<img src="${esc(C.corona)}" alt="" aria-hidden="true">`;
+  else corona.innerHTML = `<svg viewBox="0 0 100 62" aria-hidden="true"><defs><linearGradient id="oroC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dca4"/><stop offset=".5" stop-color="#c49a55"/><stop offset="1" stop-color="#8f6d3a"/></linearGradient></defs><path d="M8 50L3 14l24 18L50 5l23 27 24-18-5 36z" fill="url(#oroC)" stroke="#8f6d3a" stroke-width="1"/><rect x="8" y="50" width="84" height="8" rx="2" fill="url(#oroC)" stroke="#8f6d3a" stroke-width="1"/><circle cx="3" cy="14" r="3.2" fill="#f4a3ae"/><circle cx="50" cy="5" r="3.6" fill="#f4a3ae"/><circle cx="97" cy="14" r="3.2" fill="#f4a3ae"/><circle cx="30" cy="54" r="2" fill="#fff" opacity=".8"/><circle cx="50" cy="54" r="2" fill="#fff" opacity=".8"/><circle cx="70" cy="54" r="2" fill="#fff" opacity=".8"/></svg>`;
   $("regaloTexto").textContent = C.regalo.texto;
   $("regaloBanco").textContent = C.regalo.banco;
   $("regaloCuenta").textContent = C.regalo.cuenta;
@@ -22,16 +57,17 @@
   $("fotoGaleria1").src = C.fotos.galeria1;
   $("fotoGaleria2").src = C.fotos.galeria2;
 
-  $("paleta").innerHTML = C.vestimenta.paleta
+  $("paleta").innerHTML = (C.vestimenta.paleta || [])
     .map((p) => `<div><span style="background:${esc(p.color)}"></span>${esc(p.nombre)}</div>`).join("");
 
   $("itinerario").innerHTML = C.itinerario
-    .map((i) => `<li><span class="h">${esc(i.hora)}</span><span class="t">${esc(i.texto)}</span></li>`).join("");
+    .map((i) => `<li><span class="ic">${ICO[i.icono] || ICO.corazon}</span><div class="tx"><b>${esc(i.texto)}</b><small>${esc(i.hora)}</small></div></li>`).join("");
 
   $("eventos").innerHTML = [C.misa, C.recepcion]
     .map((e) => `<div class="evento"><h2 class="script">${esc(e.titulo)}</h2>
+      ${e.foto ? `<div class="foto-c"><img src="${esc(e.foto)}" alt=""></div>` : ""}
       <p class="hora">${esc(e.hora)}</p><p class="l">${esc(e.lugar)}</p><p class="l">${esc(e.direccion)}</p>
-      ${e.mapa ? `<a class="btn" href="${esc(e.mapa)}" target="_blank" rel="noopener">Ver ubicación</a>` : ""}</div>`).join("");
+      ${e.mapa ? `<a class="btn" href="${esc(e.mapa)}" target="_blank" rel="noopener">Cómo llegar</a>` : ""}</div>`).join("");
 
   /* ---------- Fecha, contador, calendario ---------- */
   const DIAS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
@@ -86,18 +122,20 @@
     ${flor(130, 72, 13, "#f2a9b5", "#fbdde0", "#e98a9b")}${flor(12, 62, 12, "#f8d0b8", "#fbdde0", "#f2b08f")}
   </svg>`;
   const FL = C.flores || {};
-  document.querySelectorAll(".flor").forEach((e, i) => {
-    if (FL.imagen) {
-      e.innerHTML = `<img src="${esc(FL.imagen)}" alt="" aria-hidden="true">`;
-      if (FL.tamano) {
-        const k = e.closest(".portada") ? 1.35 : 1;
-        e.style.width = e.style.height = FL.tamano * k + "px";
-      }
+  const FIMGS = (FL.imagenes && FL.imagenes.length ? FL.imagenes : [FL.imagen]).filter(Boolean);
+  let fi = 0;
+  function pintaFlor(e, i, k) {
+    if (FIMGS.length) {
+      e.innerHTML = `<img src="${esc(FIMGS[fi++ % FIMGS.length])}" alt="" aria-hidden="true">`;
+      const im = e.firstElementChild;
+      im.onerror = () => { im.onerror = null; im.src = FIMGS[0]; }; // si falta una imagen, usa la primera
+      if (FL.tamano) e.style.width = e.style.height = FL.tamano * (k || 1) + "px";
     } else {
       e.innerHTML = RAMO;
     }
     e.firstElementChild.style.animationDelay = -(i * 1.3) + "s";
-  });
+  }
+  document.querySelectorAll(".flor").forEach((e, i) => pintaFlor(e, i, e.closest(".portada") ? 1.35 : 1));
 
   /* ---------- Adornos entre secciones ---------- */
   document.querySelectorAll(".sec").forEach((s, i, all) => {
@@ -137,61 +175,75 @@
   addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(par); } }, { passive: true });
   par();
 
-  /* ---------- Mariposas ---------- 
-  const COLORES = [["#f2a9b6", "#e07f93"], ["#c9b2e0", "#a98bcc"], ["#f6c9b0", "#eaa07c"]];
-  const MARIPOSA = (c) => `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 20C14 6 3 4 3 14c0 7 8 9 17 6z" fill="${c[0]}"/><path d="M20 20C26 6 37 4 37 14c0 7-8 9-17 6z" fill="${c[0]}"/>
-    <path d="M20 21C12 22 6 28 9 33c4 3 10-3 11-12z" fill="${c[1]}"/><path d="M20 21c8 1 14 7 11 12-4 3-10-3-11-12z" fill="${c[1]}"/>
-    <rect x="19" y="12" width="2" height="18" rx="1" fill="#6b4a3a"/></svg>`;
-  const posiciones = [["12%", "30%"], ["78%", "18%"], ["70%", "62%"], ["20%", "75%"]];
-  document.querySelectorAll(".sec").forEach((sec, i) => {
-    const [l, t] = posiciones[i % posiciones.length];
-    const b = document.createElement("div");
-    b.className = "mariposa";
-    b.style.left = l; b.style.top = t;
-    b.style.animationDelay = -(i * 1.7) + "s";
-    b.innerHTML = MARIPOSA(COLORES[i % COLORES.length]);
-    sec.appendChild(b);
-  });*/
-  
-/* ---------- Mariposas (Soporte PNG externo o SVG) ---------- */
+  /* ---------- Mariposas (PNG de config o SVG por defecto) ---------- */
   const M = C.mariposas || {};
+  const MIMGS = (M.imagenes || [M.imagen1, M.imagen2, M.imagen]).filter(Boolean);
   const COLORES = [["#f2a9b6", "#e07f93"], ["#c9b2e0", "#a98bcc"], ["#f6c9b0", "#eaa07c"]];
   const MARIPOSA_SVG = (c) => `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
     <path d="M20 20C14 6 3 4 3 14c0 7 8 9 17 6z" fill="${c[0]}"/><path d="M20 20C26 6 37 4 37 14c0 7-8 9-17 6z" fill="${c[0]}"/>
     <path d="M20 21C12 22 6 28 9 33c4 3 10-3 11-12z" fill="${c[1]}"/><path d="M20 21c8 1 14 7 11 12-4 3-10-3-11-12z" fill="${c[1]}"/>
     <rect x="19" y="12" width="2" height="18" rx="1" fill="#6b4a3a"/></svg>`;
-
-  const posiciones = [["12%", "30%"], ["78%", "18%"], ["70%", "62%"], ["20%", "75%"]];
-
-  document.querySelectorAll(".sec").forEach((sec, i) => {
-    const [l, t] = posiciones[i % posiciones.length];
+  function crearMariposa(cls, i, tam) {
     const b = document.createElement("div");
-    b.className = "mariposa";
-    b.style.left = l; 
-    b.style.top = t;
-    b.style.animationDelay = -(i * 1.7) + "s";
-
-    // Si especificaste imágenes en config.js, las usa; de lo contrario usa el SVG por defecto
-    const imgRuta = (i % 2 === 0 ? M.imagen1 : M.imagen2) || M.imagen;
-    if (imgRuta) {
-      b.innerHTML = `<img src="${esc(imgRuta)}" alt="" aria-hidden="true">`;
-      if (M.tamano) b.style.width = b.style.height = M.tamano + "px";
-    } else {
-      b.innerHTML = MARIPOSA_SVG(COLORES[i % COLORES.length]);
+    b.className = cls;
+    if (MIMGS.length) {
+      b.innerHTML = `<img src="${esc(MIMGS[i % MIMGS.length])}" alt="" aria-hidden="true">`;
+      const im = b.firstElementChild;
+      im.onerror = () => { im.onerror = null; im.src = MIMGS[0]; };
+    } else b.innerHTML = MARIPOSA_SVG(COLORES[i % COLORES.length]);
+    const t = tam || M.tamano;
+    if (t) b.style.width = b.style.height = t + "px";
+    return b;
+  }
+  const volar = [["12%", "30%"], ["78%", "18%"], ["70%", "62%"], ["20%", "75%"]];
+  // posiciones de las mariposas fijas: [top, right, bottom, left, rotación, espejo]
+  const fijas = [
+    ["46%", "5%", "", "", 18, 0], ["", "", "10%", "6%", -22, 1], ["8%", "", "", "7%", -14, 1], ["", "8%", "7%", "", 20, 0]
+  ];
+  document.querySelectorAll(".sec").forEach((sec, i) => {
+    if (M.volando !== false) {
+      const [l, t] = volar[i % volar.length];
+      const v = crearMariposa("mariposa", i);
+      v.style.left = l; v.style.top = t; v.style.animationDelay = -(i * 1.7) + "s";
+      sec.appendChild(v);
     }
-
-    sec.appendChild(b);
+    if (M.fijas !== false) {
+      const [t, r, bo, l, rot, esp] = fijas[i % fijas.length];
+      const f = crearMariposa("mfija", i + 1, M.tamano ? M.tamano * 1.15 : 0);
+      Object.assign(f.style, { top: t, right: r, bottom: bo, left: l, transform: `rotate(${rot}deg)${esp ? " scaleX(-1)" : ""}` });
+      sec.appendChild(f);
+    }
   });
 
-
+  /* ---------- Pantalla del sobre: flores, mariposas y pétalos en movimiento ---------- */
+  const sobre = $("sobre");
+  const deco = document.createElement("div");
+  deco.className = "sobre-deco";
+  ["tl", "tr", "bl", "br"].forEach((p, i) => {
+    const e = document.createElement("div");
+    e.className = "flor " + p;
+    deco.appendChild(e);
+    pintaFlor(e, i, 1);
+  });
+  for (let i = 0; i < 5; i++) {
+    const v = crearMariposa("mariposa", i);
+    v.style.left = (8 + i * 19) + "%"; v.style.top = (14 + ((i * 37) % 62)) + "%";
+    v.style.animationDelay = -(i * 1.9) + "s"; v.style.animationDuration = 7 + i + "s";
+    deco.appendChild(v);
+  }
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement("i");
+    if (i % 3 === 0) { p.className = "mini"; p.innerHTML = `<svg viewBox="-20 -20 40 40">${flor(0, 0, 18, "#f8c7ce", "#f1a2b0", "#e8808f")}</svg>`; }
+    p.style.cssText += `left:${Math.random()*100}%;--s:${9+Math.random()*10}px;--d:${10+Math.random()*10}s;--x:${(Math.random()*120-60)|0}px;animation-delay:${-Math.random()*14}s`;
+    deco.appendChild(p);
+  }
+  sobre.prepend(deco);
 
   /* ---------- Revelado al hacer scroll ---------- */
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("vista"); io.unobserve(e.target); } }), { threshold: 0.12 });
   document.querySelectorAll(".sec,.foto-sec").forEach((s) => io.observe(s));
 
   /* ---------- Sobre ---------- */
-  const sobre = $("sobre");
   $("sello").addEventListener("click", () => {
     sobre.classList.add("abierto");
     setTimeout(() => {

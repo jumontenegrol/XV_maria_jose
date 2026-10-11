@@ -3,61 +3,55 @@
    (no necesitas tocar el HTML ni el CSS)
    ===================================================== */
 const INVITACION = {
-  nombre: "María José",
+  nombre: "Maríajose",
 
   frase:
     "Hay momentos inolvidables que se atesoran con el corazón para siempre. Por esa razón, con la alegría y emoción, quiero compartir contigo esta noche maravillosa celebrando juntos mis XV años.",
 
   // Fecha y hora del evento (formato AAAA-MM-DDTHH:MM:SS-05:00, hora de Colombia)
-  fecha: "2026-11-28T18:00:00-05:00",
+  fecha: "2026-11-28T16:00:00-05:00",
 
-  padres: ["Nombre del papá", "Nombre de la mamá"],
-  padrinos: ["Nombre del padrino", "Nombre de la madrina"],
+  padres: ["Mauricio Fernandez", "Marcela Gómez"],
 
   misa: {
     titulo: "Misa de Agradecimiento",
-    hora: "6:00 PM",
-    lugar: "Iglesia (por confirmar)",
-    direccion: "Dirección pendiente",
-    mapa: "" // pega aquí el enlace de Google Maps; si está vacío el botón se oculta
+    hora: "4:00 PM",
+    lugar: "Capilla del Santísimo",
+    direccion: "Villapinzón, Cundinamarca",
+    foto: "", // opcional: foto circular del lugar, ej. "assets/img/capilla.jpg"
+    mapa: "https://maps.app.goo.gl/5Nj7PoErPMbHnu5M6" // pega aquí el enlace de Google Maps; si está vacío el botón se oculta
   },
 
   recepcion: {
     titulo: "Recepción",
     hora: "8:00 PM",
-    lugar: "Salón (por confirmar)",
-    direccion: "Dirección pendiente",
-    mapa: ""
+    lugar: "Salón de eventos Brasas y Sazón",
+    direccion: "Villapinzón, Cundinamarca",
+    foto: "",
+    mapa: "https://maps.app.goo.gl/FeQfFJA2snRc9DDs8"
   },
 
+  // iconos disponibles: misa, llegada, vals, cena, foto, fiesta, brindis, despedida, corazon
   itinerario: [
-    { hora: "6:00 PM", texto: "Misa" },
-    { hora: "8:00 PM", texto: "Llegada" },
-    { hora: "8:30 PM", texto: "Vals" },
-    { hora: "9:00 PM", texto: "Cena" },
-    { hora: "10:00 PM", texto: "Fiesta" },
-    { hora: "2:00 AM", texto: "Despedida" }
+    { hora: "4:00 PM", texto: "Misa", icono: "misa" },
+    { hora: "8:00 PM", texto: "Llegada", icono: "llegada" },
+    { hora: "8:30 PM", texto: "Vals", icono: "vals" },
+    { hora: "9:00 PM", texto: "Cena", icono: "cena" },
+    { hora: "10:00 PM", texto: "Fiesta", icono: "fiesta" },
+    { hora: "2:00 AM", texto: "Despedida", icono: "despedida" }
   ],
 
   vestimenta: {
-    titulo: "Etiqueta",
-    texto:
-      "Con mucho cariño, les pedimos evitar el tono rosa pastel y el durazno, ya que están reservados para la quinceañera. Estos son los colores sugeridos:",
-    paleta: [
-      { nombre: "Verde salvia", color: "#9cae95" },
-      { nombre: "Azul empolvado", color: "#9fb6c9" },
-      { nombre: "Lavanda", color: "#b9a6cf" },
-      { nombre: "Burdeos", color: "#7d2f45" },
-      { nombre: "Champaña", color: "#d9c3a0" }
-    ]
+    titulo: "Mujeres y hombres",
+    detalle: "Traje formal",
+    texto: "Se reservan las tonalidades de rosado para la quinceañera.",
+    paleta: [] // opcional: [{ nombre: "Verde salvia", color: "#9cae95" }, ...]; vacío = no se muestra
   },
 
   regalo: {
+    titulo: "Lluvia de sobres",
     texto:
-      "Ahora mis sueños se materializan. Mi mayor regalo es compartir este día contigo, pero si deseas apoyarme, puedes hacerlo con una transferencia. Gracias por cada detalle.",
-    banco: "Nequi",
-    cuenta: "XXXXXX",
-    titular: "" // opcional: nombre del titular
+      "Tu presencia es mi mejor regalo. Si deseas obsequiarme algo más, puedes hacerlo con una lluvia de sobres."
   },
 
   confirmacion: {
@@ -66,19 +60,26 @@ const INVITACION = {
     mensaje: "¡Hola! Soy {nombre} y confirmo mi asistencia a los XV años de {quinceanera}."
   },
 
-  // Flores de las esquinas:
-  // - imagen: ruta de tu PNG/WebP con fondo transparente (flores en la esquina SUPERIOR IZQUIERDA;
-  //   el código la voltea solo para las otras esquinas). Déjalo vacío "" para usar las flores dibujadas.
-  // - tamano: ancho en píxeles de cada adorno (la portada lo usa 35% más grande).
+  // Flores (PNG/WebP con fondo transparente, ramo en la esquina SUPERIOR IZQUIERDA;
+  // el código las voltea solo). Puedes poner varias: se alternan entre las secciones.
   flores: {
-    imagen: "assets/img/flores1.png",   // ej: "assets/img/flores.png"
+    imagenes: ["assets/img/flores1.png", "assets/img/flores2.png"],
     tamano: 170
   },
 
+  // Imagen del arco de flores de la portada (arriba)
+  arcoSuperior: "assets/img/Arcoflores.png",
+
+  arcoSubir: 0,   // píxeles extra para subir (negativo) o bajar (positivo) el arco; el espacio vacío de arriba se recorta solo
+
+  // Corona en el centro del arco: "" = corona dorada dibujada, "assets/img/corona.png" = tu imagen, false = sin corona
+  corona: "assets/img/corona.png",
+  // Mariposas: "volando" = animadas, "fijas" = estáticas en las esquinas (true/false)
   mariposas: {
-    imagen1: "assets/img/mariposa3.png",
-    imagen2: "assets/img/mariposa2.png", // o la misma si solo tienes una
-    tamano: 55
+    imagenes: ["assets/img/mariposa2.png", "assets/img/mariposa3.png", "assets/img/mariposa4.png"],
+    tamano: 55,
+    volando: true,
+    fijas: true
   },
 
   despedida: "¡Te esperamos!",
