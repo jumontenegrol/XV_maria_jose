@@ -76,7 +76,7 @@ const INVITACION = {
   corona: "assets/img/corona.png",
   // Mariposas: "volando" = animadas, "fijas" = estáticas en las esquinas (true/false)
   mariposas: {
-    imagenes: ["assets/img/mariposa2.png", "assets/img/mariposa3.png", "assets/img/mariposa4.png"],
+    imagenes: ["assets/img/mariposa2.png", "assets/img/mariposa3.png", "assets/img/mariposa5.png"],
     tamano: 55,
     volando: true,
     fijas: true
