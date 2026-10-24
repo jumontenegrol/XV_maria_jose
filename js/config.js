@@ -15,7 +15,7 @@ const INVITACION = {
 
   misa: {
     titulo: "Misa de Agradecimiento",
-    hora: "4:30 PM",
+    hora: "4:00 PM",
     lugar: "Capilla del Santísimo",
     direccion: "Villapinzón, Cundinamarca",
     foto: "", // opcional: foto circular del lugar, ej. "assets/img/capilla.jpg"
@@ -33,7 +33,7 @@ const INVITACION = {
 
   // iconos disponibles: misa, llegada, vals, cena, foto, fiesta, brindis, despedida, corazon
   itinerario: [
-    { hora: "4:30 PM", texto: "Misa", icono: "misa" },
+    { hora: "4:00 PM", texto: "Misa", icono: "misa" },
     { hora: "6:00 PM", texto: "Llegada", icono: "llegada" },
     { hora: "7:30 PM", texto: "Vals", icono: "vals" },
     { hora: "9:00 PM", texto: "Cena", icono: "cena" },
