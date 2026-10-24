@@ -87,9 +87,9 @@ const INVITACION = {
   // Fotos: reemplaza los archivos de assets/img/ por los reales
   // (mismo nombre) o cambia aquí las rutas (.jpg, .png, .webp).
   fotos: {
-    portada: "assets/img/portada1.svg",   // dentro del arco
-    retrato: "assets/img/retrato1.svg",   // foto grande del centro
-    galeria1: "assets/img/galeria11.svg", // foto debajo de confirmar asistencia
-    galeria2: "assets/img/galeria22.svg"  // foto final
+    portada: "assets/img/Portada1.JPG",   // dentro del arco
+    retrato: "assets/img/Retrato1.JPG",   // foto grande del centro
+    galeria1: "assets/img/Galeria11.JPG", // foto debajo de confirmar asistencia
+    galeria2: "assets/img/Galeria22.JPG"  // foto final
   }
 };
