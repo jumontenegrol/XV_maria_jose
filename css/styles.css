@@ -75,6 +75,7 @@ h2.script{font-size:2.1rem;margin-bottom:.6rem}
 .foto-sec{aspect-ratio:4/5;overflow:hidden;opacity:0;transition:opacity 1s}
 .foto-sec.final{aspect-ratio:4/5}
 .foto-peq{width:46%;margin:2rem auto 0;aspect-ratio:1;border:2px solid var(--oro);padding:4px}
+.foto-peq{width:80%;max-width:360px;aspect-ratio:4/5}
 
 /* itinerario */
 .linea{list-style:none;position:relative;max-width:320px;margin:2rem auto 0;padding:0}
