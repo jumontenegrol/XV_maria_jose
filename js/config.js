@@ -3,7 +3,7 @@
    (no necesitas tocar el HTML ni el CSS)
    ===================================================== */
 const INVITACION = {
-  nombre: "Maríajose",
+  nombre: "Maríajosé",
 
   frase:
     "Hay momentos inolvidables que se atesoran con el corazón para siempre. Por esa razón, con la alegría y emoción, quiero compartir contigo esta noche maravillosa celebrando juntos mis XV años.",
