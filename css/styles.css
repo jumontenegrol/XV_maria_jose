@@ -35,7 +35,7 @@ h2.script{font-size:2.1rem;margin-bottom:.6rem}
 .sec.vista,.foto-sec.vista{opacity:1;transform:none}
 .sec>*:not(.flor){position:relative;z-index:2}
 .portada{padding-top:7rem}
-.portada h1{font-size:3.6rem;color:var(--verde)}
+.portada h1{background:none;-webkit-text-fill-color:#d49fab;color:#d49fab;animation:none;filter:drop-shadow(0 2px 3px rgba(150,70,90,.2))}
 .nombre{font-size:3.2rem;margin:.4rem 0 1.6rem}
 .arco{width:72%;max-width:300px;aspect-ratio:4/5;margin:0 auto 2rem;border:2px solid var(--oro);border-radius:999px 999px 6px 6px;padding:6px;overflow:hidden}
 .arco img{border-radius:999px 999px 2px 2px}
