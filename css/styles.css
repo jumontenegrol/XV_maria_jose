@@ -273,3 +273,9 @@ body{background:radial-gradient(ellipse at 20% 0%,#f0cbc4 0,transparent 55%),rad
 @keyframes brillo-c{to{filter:drop-shadow(0 4px 5px rgba(120,80,30,.35)) brightness(1.12)}}
 .portada h1{margin-bottom:.3rem}
 .nombre{margin:.2rem 0 1.8rem;word-spacing:.4em}
+
+
+.btn-musica{position:fixed;right:14px;bottom:14px;z-index:60;width:46px;height:46px;border-radius:50%;border:2px solid #fff;background:radial-gradient(circle at 35% 28%,#fbc1cd,#ec8aa0 60%,#d96a86);color:#fff;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(160,60,90,.4);animation:latido-m 2.4s ease-in-out infinite}
+.btn-musica[hidden]{display:none}
+.btn-musica.pausa{animation:none;opacity:.65}
+@keyframes latido-m{50%{transform:scale(1.08)}}

@@ -246,6 +246,16 @@
   /* ---------- Sobre ---------- */
   $("sello").addEventListener("click", () => {
     sobre.classList.add("abierto");
+    if (C.musica && C.musica.archivo) {
+      const audio = $("musica"), btn = $("btnMusica");
+      audio.src = C.musica.archivo;
+      audio.volume = C.musica.volumen ?? 0.5;
+      audio.play().then(() => { btn.hidden = false; }).catch(() => {});
+      btn.onclick = () => {
+        if (audio.paused) { audio.play(); btn.classList.remove("pausa"); }
+        else { audio.pause(); btn.classList.add("pausa"); }
+      };
+    }
     setTimeout(() => {
       sobre.classList.add("fuera");
       document.body.classList.remove("bloqueado");

@@ -81,7 +81,10 @@ const INVITACION = {
     volando: true,
     fijas: true
   },
-
+    musica: {
+    archivo: "assets/audio/cancion.mp3", 
+    volumen: 0.5                         
+  },
   despedida: "¡Te esperamos!",
 
   // Fotos: reemplaza los archivos de assets/img/ por los reales
